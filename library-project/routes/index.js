@@ -17,6 +17,22 @@ router.get('/books', (req, res) => {
     });
 });
 
+router.get('/books/add', (req, res) => {
+  res.render('book-add');
+});
+
+router.post('/books/add', (req, res) => {
+  const { title, author, description, rating } = req.body;
+  Book.create({ title, author, description, rating })
+    .then(() => {
+      console.log('Book successfully created');
+      res.redirect('/books');
+    })
+    .catch(err => {
+      console.error('Error while creating book', err);
+    });
+});
+
 router.get('/books/:bookId', (req, res) => {
   const _id = req.params.bookId;
   Book.findOne({ _id })
