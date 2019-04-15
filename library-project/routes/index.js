@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/book');
+const Author = require('../models/author');
 
 /* GET home page */
 router.get('/', (req, res, next) => {
@@ -73,6 +74,23 @@ router.get('/books/:bookId', (req, res) => {
 
 router.get('/authors/add', (req, res) => {
   res.render('author-add');
+});
+
+router.post('/authors/add', (req, res) => {
+  const { firstName, lastName, nationality, birthdate, pictureUrl } = req.body;
+  Author.create({
+    firstName,
+    lastName,
+    nationality,
+    birthdate,
+    pictureUrl
+  })
+    .then(() => {
+      res.redirect('/books');
+    })
+    .catch(err => {
+      console.error('Error while adding author', err);
+    });
 });
 
 module.exports = router;
