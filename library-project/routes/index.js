@@ -64,7 +64,9 @@ router.get('/books/edit/:bookId', (req, res) => {
 router.get('/books/:bookId', (req, res) => {
   const _id = req.params.bookId;
   Book.findOne({ _id })
+    .populate('author')
     .then(book => {
+      console.log(book);
       res.render('book-detail', { book });
     })
     .catch(err => {
