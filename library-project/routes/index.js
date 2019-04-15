@@ -71,4 +71,8 @@ router.get('/books/:bookId', (req, res) => {
     });
 });
 
+router.get('/authors/add', (req, res) => {
+  res.render('author-add');
+});
+
 module.exports = router;
